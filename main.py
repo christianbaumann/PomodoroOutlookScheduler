@@ -47,15 +47,23 @@ def start_pomodoro_timer(page):
 def wait_for_timer_completion(duration, buffer_time):
     time.sleep(duration * 60 + buffer_time)
 
-def move_window_to_left_screen():
+def move_window_to_left_screen_and_maximize_upper_half():
     hWnd = win32gui.GetForegroundWindow()
     monitors = win32api.EnumDisplayMonitors()
     if len(monitors) > 1:
-        main_monitor = monitors[0][2]
         left_monitor = monitors[1][2]
-        new_x = left_monitor[0]
-        new_y = main_monitor[1]
-        win32gui.SetWindowPos(hWnd, 0, new_x, new_y, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
+
+        # Move window to the left screen
+        win32gui.SetWindowPos(hWnd, 0, left_monitor[0], left_monitor[1], 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
+
+        # Get the window's current position after moving it
+        rect = win32gui.GetWindowRect(hWnd)
+
+        # Calculate the new height to fit the upper half of the left screen
+        new_height = (left_monitor[3] - left_monitor[1]) // 2
+
+        # Resize the window to the upper half of the left screen
+        win32gui.SetWindowPos(hWnd, 0, rect[0], rect[1], rect[2] - rect[0], new_height, win32con.SWP_NOZORDER)
 
 with sync_playwright() as p:
     Luxafor.set_color('red', config['luxafor_id'])
@@ -63,7 +71,7 @@ with sync_playwright() as p:
     context = browser.new_context(viewport={'width': 1280, 'height': 1024}, device_scale_factor=float(config['zoom_level']))
     page = context.new_page()
 
-    move_window_to_left_screen()
+    move_window_to_left_screen_and_maximize_upper_half()
 
     if start_pomodoro_timer(page):
         create_appointment(config['meeting_subject'], config['attendees'], config['appointment_duration_minutes'])
