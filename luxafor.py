@@ -1,4 +1,5 @@
-import pywin32_system32.win32api as win32api
+import win32api
+import win32con
 
 class Luxafor:
     @staticmethod
