@@ -1,6 +1,7 @@
 import json
 import time
 import datetime
+import math
 import win32com.client
 from playwright.sync_api import sync_playwright
 from luxafor import Luxafor
@@ -99,8 +100,11 @@ with sync_playwright() as p:
 
     move_window_to_left_screen_and_maximize_upper_half()
 
+    appointment_duration_minutes = math.ceil(config['pomodoro_duration_minutes'] + (config['buffer_time_seconds'] / 60.0))
+    log_message(f"Calculated appointment duration: {appointment_duration_minutes} minutes")
+
     if start_pomodoro_timer(page):
-        create_appointment(config['meeting_subject'], config['attendees'], config['appointment_duration_minutes'])
+        create_appointment(config['meeting_subject'], config['attendees'], appointment_duration_minutes)
         wait_for_timer_completion(config['pomodoro_duration_minutes'], config['buffer_time_seconds'])
     else:
         log_message("Pomodoro timer failed to start. Appointment not created.")
