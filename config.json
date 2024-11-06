@@ -4,9 +4,11 @@
     "chriss713@gmail.com"
   ],
   "luxafor_id": "abcd",
-  "zoom_level": "2.0",
+  "zoom_level": "3.0",
   "pomofocus_url": "https://pomofocus.io/",
   "pomodoro_duration_minutes": 25,
   "buffer_time_seconds": 30,
-  "appointment_duration_minutes": 26
+  "appointment_duration_minutes": 26,
+  "viewport_width": 1078,
+  "viewport_height": 939
 }

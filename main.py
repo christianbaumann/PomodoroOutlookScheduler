@@ -90,7 +90,7 @@ with sync_playwright() as p:
     browser = p.firefox.launch(headless=False)
 
     context = browser.new_context(
-        viewport={'width': 1280, 'height': 1024},
+        viewport={'width': config['viewport_width'], 'height': config['viewport_height']},
         device_scale_factor=float(config['zoom_level']),
         permissions=["notifications"]
     )
