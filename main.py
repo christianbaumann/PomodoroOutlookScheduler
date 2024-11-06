@@ -68,7 +68,12 @@ def move_window_to_left_screen_and_maximize_upper_half():
 with sync_playwright() as p:
     Luxafor.set_color('red', config['luxafor_id'])
     browser = p.firefox.launch(headless=False)
-    context = browser.new_context(viewport={'width': 1280, 'height': 1024}, device_scale_factor=float(config['zoom_level']))
+
+    context = browser.new_context(
+        viewport={'width': 1280, 'height': 1024},
+        device_scale_factor=float(config['zoom_level']),
+        permissions=["notifications"]
+    )
     page = context.new_page()
 
     move_window_to_left_screen_and_maximize_upper_half()
