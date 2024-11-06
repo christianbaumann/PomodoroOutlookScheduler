@@ -34,7 +34,7 @@ def create_appointment(subject, attendees, duration):
 def start_pomodoro_timer(page):
     try:
         page.goto(config['pomofocus_url'])
-        page.locator("text=START").click()
+        page.locator("text=START").first.click()
         page.on("dialog", lambda dialog: dialog.accept())
         return True
     except Exception as e:
