@@ -5,6 +5,7 @@ from playwright.sync_api import sync_playwright
 from luxafor import Luxafor
 import win32api
 import win32gui
+import win32con
 
 # Load Config
 with open('config.json') as config_file:
